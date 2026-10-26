@@ -1,0 +1,17 @@
+﻿services:
+  - type: worker
+    name: touch-base-worker
+    env: node
+    region: frankfurt
+    plan: standard
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/queue/worker.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_DIRECT_POSTGRES_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
