@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Terminal, Activity, Layers, ShieldCheck } from "lucide-react";
+import { Terminal, Activity, Layers, ShieldCheck, Globe } from "lucide-react";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Navigation Links */}
           <nav className="space-y-1.5 font-mono text-xs">
             <Link
-              href="/"
+              href="/dashboard"
               className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
             >
               <Activity className="w-4 h-4 text-emerald-400" />
@@ -39,6 +39,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             >
               <Layers className="w-4 h-4 text-cyan-400" />
               <span>Campaign Boards & HITL</span>
+            </Link>
+
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-slate-800/60 transition-colors border-t border-slate-800/80 mt-3 pt-3"
+            >
+              <Globe className="w-4 h-4 text-emerald-400" />
+              <span>Agency Website</span>
             </Link>
           </nav>
         </div>
