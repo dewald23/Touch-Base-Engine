@@ -1,4 +1,4 @@
-﻿export interface CampaignJobPayload {
+export interface CampaignJobPayload {
   mode: "start" | "resume";
   threadId: string;
   payload: {

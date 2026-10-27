@@ -1,4 +1,4 @@
-﻿export const logger = {
+export const logger = {
   info: (meta: Record<string, any>, message: string) => {
     console.log(JSON.stringify({ level: "INFO", timestamp: new Date().toISOString(), ...meta, message }));
   },

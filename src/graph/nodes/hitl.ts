@@ -1,4 +1,4 @@
-﻿import { TouchBaseGraphState } from "@/graph/state";
+import { TouchBaseGraphState } from "@/graph/state";
 import { logger } from "@/lib/logger";
 
 export async function hitlNode(state: typeof TouchBaseGraphState.State) {

@@ -10,62 +10,60 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder"
 );
 
-export async function growthHackerNode(state: typeof TouchBaseGraphState.State) {
-  logger.info({ sector: "GrowthHacker", threadId: state.threadId }, "Executing Growth Hacker & SEO Audit Node");
+export async function brandStrategistNode(state: typeof TouchBaseGraphState.State) {
+  logger.info({ sector: "BrandStrategist", threadId: state.threadId }, "Executing Brand Strategist Hero Node");
   
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
     
     const prompt = [
-      "You are an expert growth hacker, local SEO specialist, and conversion rate optimization strategist.",
+      "You are an elite brand strategist, creative director, and master copywriter.",
       "Task Type: " + state.taskType,
+      "Client ID: " + state.clientId,
       "Client Instructions: " + state.instructions,
-      "Previous Brand Strategy & Copy Context:",
-      state.brandCopy || "No preliminary copy provided.",
       "",
-      "Perform a rigorous SEO and growth audit. Provide:",
-      "1. Optimized meta title and meta description tags.",
-      "2. Primary and secondary local keyword targets.",
-      "3. Conversion Rate Optimization (CRO) recommendations for deployment.",
-      "4. Distribution channels (e.g., local search, social, automated email touchpoints)."
+      "Develop a high-impact brand strategy and marketing copy suite. Provide:",
+      "1. Core Brand Positioning & Unique Value Proposition (UVP).",
+      "2. Brand Voice, Tone, and Messaging Pillars.",
+      "3. Compelling Hero Headline, Sub-headline, and Primary Call-to-Action (CTA).",
+      "4. Core Value Propositions & Service Features.",
+      "5. Elevator Pitch for local market resonance."
     ].join("\n");
 
     const result = await model.generateContent(prompt);
-    const growthReport = result.response.text();
+    const brandCopy = result.response.text();
     
-    const sha256 = crypto.createHash("sha256").update(growthReport, "utf8").digest("hex");
-    const storagePath = "campaigns/" + state.threadId + "/growth-report-" + Date.now() + ".md";
+    const sha256 = crypto.createHash("sha256").update(brandCopy, "utf8").digest("hex");
+    const storagePath = "campaigns/" + state.threadId + "/brand-copy-" + Date.now() + ".md";
 
     const { error: uploadError } = await supabase.storage
       .from("campaigns")
-      .upload(storagePath, growthReport, { contentType: "text/markdown", upsert: true });
+      .upload(storagePath, brandCopy, { contentType: "text/markdown", upsert: true });
 
     if (uploadError) {
-      throw new Error("Failed to upload growth report artifact: " + uploadError.message);
+      throw new Error("Failed to upload brand copy artifact: " + uploadError.message);
     }
 
     const artifactRef = { 
-      key: "growthReport", 
+      key: "brandCopy", 
       uri: "supabase://campaigns/" + storagePath, 
       sha256, 
-      sizeBytes: Buffer.byteLength(growthReport, "utf8"), 
+      sizeBytes: Buffer.byteLength(brandCopy, "utf8"), 
       updatedAt: Date.now() 
     };
 
     return {
-      growthReport,
-      currentSector: "HumanInTheLoopApproval", // Routes to supervisor checkpoint
+      brandCopy,
+      currentSector: "GrowthHacker",
       artifactRefs: {
-        ...state.artifactRefs,
-        growthReport: artifactRef,
+        brandCopy: artifactRef,
       },
       auditTrail: [
-        ...(state.auditTrail || []),
-        { sector: "GrowthHacker", action: "Generated SEO & growth report artifact", timestamp: Date.now() }
+        { sector: "BrandStrategist", action: "Synthesized brand strategy and conversion copy", timestamp: Date.now() }
       ]
     };
   } catch (err: any) {
-    logger.error({ sector: "GrowthHacker", err }, "GrowthHacker execution failed");
+    logger.error({ sector: "BrandStrategist", err }, "BrandStrategist execution failed");
     return { error: err.message, currentSector: "Failed" };
   }
 }

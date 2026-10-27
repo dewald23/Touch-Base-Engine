@@ -1,4 +1,4 @@
-﻿import "dotenv/config";
+import "dotenv/config";
 import { Worker, Job } from "bullmq";
 import { redis } from "@/lib/redis";
 import { agencyGraph } from "@/graph/index";
