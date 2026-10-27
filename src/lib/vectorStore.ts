@@ -9,24 +9,33 @@ const supabase = createClient(
 );
 
 /**
- * Generates a 768-dimensional embedding using Gemini's text-embedding-004 model.
+ * Generates a 1536-dimensional embedding using Gemini's gemini-embedding-001 model.
  */
 async function generateEmbedding(text: string): Promise<number[]> {
-  const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-  const result = await model.embedContent(text);
+  const model = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
+  const result = await model.embedContent({
+    content: { role: "user", parts: [{ text }] },
+    outputDimensionality: 1536,
+  } as any);
   return result.embedding.values;
 }
 
 /**
  * Ingests a document, brand guideline, or knowledge snippet into the Supabase vector store.
  */
-export async function ingestDocument(content: string, metadata: Record<string, any> = {}) {
+export async function ingestDocument(
+  content: string,
+  metadata: Record<string, any> = {},
+  title?: string
+) {
   try {
     const embedding = await generateEmbedding(content);
+    const docTitle = title || metadata.title || content.slice(0, 80).trim();
 
     const { data, error } = await supabase
-      .from("agency_knowledge")
+      .from("agency_knowledge_embeddings")
       .insert({
+        title: docTitle,
         content,
         metadata,
         embedding,
@@ -51,7 +60,7 @@ export async function ingestDocument(content: string, metadata: Record<string, a
  */
 export async function queryVectorStore(
   queryText: string,
-  matchThreshold: number = 0.75,
+  matchThreshold: number = 0.5,
   matchCount: number = 5
 ) {
   try {
@@ -69,6 +78,7 @@ export async function queryVectorStore(
 
     return data as Array<{
       id: string;
+      title: string;
       content: string;
       metadata: Record<string, any>;
       similarity: number;

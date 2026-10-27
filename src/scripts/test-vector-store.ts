@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { ingestDocument, queryVectorStore } from "@/lib/vectorStore";
 import { logger } from "@/lib/logger";
 

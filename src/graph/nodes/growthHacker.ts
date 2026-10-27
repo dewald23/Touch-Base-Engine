@@ -10,7 +10,7 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || "https://p
 export async function growthHackerNode(state: typeof TouchBaseGraphState.State) {
   logger.info({ sector: "GrowthHacker", threadId: state.threadId }, "Executing Growth Hacker Hero Node");
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite" });
     const prompt = [
       "You are an expert growth hacker and local SEO strategist.",
       "Task Type: " + state.taskType,

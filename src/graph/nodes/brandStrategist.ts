@@ -14,7 +14,7 @@ export async function brandStrategistNode(state: typeof TouchBaseGraphState.Stat
   logger.info({ sector: "BrandStrategist", threadId: state.threadId }, "Executing Brand Strategist Hero Node");
   
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite" });
     
     const prompt = [
       "You are an elite brand strategist, creative director, and master copywriter.",

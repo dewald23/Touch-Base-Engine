@@ -10,7 +10,7 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || "https://p
 export async function architectNode(state: typeof TouchBaseGraphState.State) {
   logger.info({ sector: "Architect", threadId: state.threadId }, "Executing Architect Hero Node");
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite" });
     const prompt = [
       "You are a principal staff software architect and front-end specialist.",
       "Task Type: " + state.taskType,

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "test:nexus": "npx tsx src/scripts/test-nexus.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
