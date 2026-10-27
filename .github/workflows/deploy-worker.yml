@@ -1,0 +1,25 @@
+name: Deploy Barracks Worker
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'src/queue/**'
+      - 'src/graph/**'
+      - 'src/lib/**'
+      - 'render.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Trigger Render Deploy Hook
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Deploy Hook
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK_URL"
+

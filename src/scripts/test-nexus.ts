@@ -157,7 +157,7 @@ async function runNexusDiagnostics() {
   console.log("\n🤖 [8/8] LangGraph Multi-Agent Execution (Dry Run)...");
   try {
     const threadId = "nexus_test_" + Date.now();
-    const config = { configurable: { thread_id: threadId } };
+    const config: any = { configurable: { thread_id: threadId } };
     const graphState = await agencyGraph.invoke(
       {
         threadId,
