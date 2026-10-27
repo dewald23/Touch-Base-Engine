@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest run",
     "test:nexus": "tsx src/scripts/test-nexus.ts",
-    "test:e2e": "tsx src/scripts/test-nexus-e2e.ts"
+    "test:e2e": "tsx src/scripts/test-nexus-e2e.ts",
+    "test:gateway": "tsx src/scripts/test-ai-gateway.ts"
   },
   "dependencies": {
     "@google/genai": "^2.31.0",
@@ -22,6 +23,7 @@
     "@langchain/langgraph-checkpoint-postgres": "^1.1.2",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "@supabase/supabase-js": "^2.118.0",
+    "ai": "^7.0.155",
     "autoprefixer": "^10.6.2",
     "bullmq": "^5.0.0",
     "clsx": "^2.1.1",
