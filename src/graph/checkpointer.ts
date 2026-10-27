@@ -4,7 +4,7 @@ import { logger } from "@/lib/logger";
 
 const { Pool } = pg;
 
-const connectionString = process.env.SUPABASE_DIRECT_POSTGRES_URL || "postgres://postgres:postgres@localhost:5432/postgres";
+const connectionString = process.env.SUPABASE_DB_POOLER_URL || process.env.SUPABASE_DIRECT_POSTGRES_URL || "postgres://postgres:postgres@localhost:5432/postgres";
 
 export const pgPool = new Pool({
   connectionString,

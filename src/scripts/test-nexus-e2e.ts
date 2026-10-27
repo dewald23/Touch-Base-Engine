@@ -55,6 +55,9 @@ async function testNexusE2E() {
     const state = await agencyGraph.getState(config);
 
     if (state && state.values && state.values.requiresHitlApproval) {
+      while (!(await job.isCompleted())) {
+        await new Promise((r) => setTimeout(r, 500));
+      }
       pausedState = state.values;
       console.log(`\n  🛑 Graph safely reached HITL gate!`);
       console.log(`     - Current Sector: ${pausedState.currentSector}`);

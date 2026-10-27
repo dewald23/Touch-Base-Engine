@@ -4,14 +4,26 @@ services:
     env: node
     region: frankfurt
     plan: standard
-    buildCommand: npm ci && npm run build
-    startCommand: node dist/queue/worker.js
+    buildCommand: npm ci
+    startCommand: npm run worker
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
       - key: SUPABASE_DIRECT_POSTGRES_URL
+        sync: false
+      - key: SUPABASE_DB_POOLER_URL
+        sync: false
+      - key: UPSTASH_REDIS_URL
         sync: false
       - key: REDIS_URL
         sync: false
       - key: GEMINI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
         sync: false
